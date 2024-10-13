@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: #0d1117;
+  color: white;
+  font-family: "Roboto", sans-serif;
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
