@@ -17,8 +17,8 @@ export default function Panel({
   }
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center p-12">
-      <div className="w-full h-full grid grid-cols-4 grid-rows-2 gap-4">
+    <div className="w-screen h-screen flex justify-center items-center p-12 max-xl:h-full">
+      <div className="w-full h-full grid grid-cols-4 grid-rows-2 gap-4 max-xl:grid-cols-1">
         <div className={`${blocksStyles}`}>
           <span>Wydatki według kategorii</span>
           <div className="h-[calc(100%-24px)] flex justify-center items-center">
@@ -29,7 +29,9 @@ export default function Panel({
             )}
           </div>
         </div>
-        <div className={`${blocksStyles} flex flex-col col-span-3`}>
+        <div
+          className={`${blocksStyles} flex flex-col col-span-3 max-xl:col-span-1`}
+        >
           <div className="w-full flex justify-between">
             <span>Dochody vs wydatki</span>
             <button
@@ -49,10 +51,12 @@ export default function Panel({
             )}
           </div>
         </div>
-        <div className={`${blocksStyles} col-span-2 flex flex-col gap-4`}>
+        <div
+          className={`${blocksStyles} col-span-2 max-xl:col-span-1 flex flex-col gap-4`}
+        >
           <span>Ostatnie transakcje</span>
           <div className="overflow-y-auto h-full rounded">
-            <table className="w-full text-left">
+            <table className="text-left w-full table-fixed">
               <thead className="sticky top-0">
                 <tr className="bg-[#1D222A]">
                   <th className="p-4">Kategoria</th>

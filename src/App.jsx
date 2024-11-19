@@ -7,11 +7,13 @@ import AddCategory from "./components/AddCategory";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [transactions, setTransactions] = useState(handleGetTransFromLS);
-  const [categories, setCategories] = useState(
-    handleGetCatFromLS().length === 0
-      ? handleGetCatFromLS()
-      : [
+  const [transactions, setTransactions] = useState(() =>
+    handleGetTransFromLS()
+  );
+  const [categories, setCategories] = useState(() => {
+    const initialCategories = handleGetCatFromLS();
+    return initialCategories.length === 0
+      ? [
           "🍔 Żywność",
           "🎯 Rozrywka",
           "🧵 Ubrania",
@@ -21,7 +23,8 @@ function App() {
           "💲 Zysk",
           "🪄 Strata",
         ]
-  );
+      : initialCategories;
+  });
   const [selectedMonth, setSelectedMonth] = useState(new Date());
   const [selectedTab, setSelectedTab] = useState("Panel");
 
@@ -81,18 +84,26 @@ function App() {
   function handleGetTransFromLS() {
     try {
       const fetchedTransactions = localStorage.getItem("transactions");
-      return fetchedTransactions ? JSON.parse(fetchedTransactions) : [];
+      const parsedTransactions = fetchedTransactions
+        ? JSON.parse(fetchedTransactions)
+        : [];
+      return Array.isArray(parsedTransactions) ? parsedTransactions : [];
     } catch (error) {
       console.error("Failed to fetch transactions from local storage", error);
+      return [];
     }
   }
 
   function handleGetCatFromLS() {
     try {
       const fetchedCategories = localStorage.getItem("categories");
-      return fetchedCategories ? JSON.parse(fetchedCategories) : [];
+      const parsedCategories = fetchedCategories
+        ? JSON.parse(fetchedCategories)
+        : [];
+      return Array.isArray(parsedCategories) ? parsedCategories : [];
     } catch (error) {
       console.error("Failed to fetch categories from local storage", error);
+      return [];
     }
   }
 
@@ -125,7 +136,7 @@ function App() {
   }
 
   return (
-    <div className="flex">
+    <div className="flex relative">
       <Sidebar
         selectedTab={selectedTab}
         onTabChange={handleTabChange}

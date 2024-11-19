@@ -10,7 +10,7 @@ export default function Summary({
   const styles =
     "rounded bg-[#11151C] text-center justify-center items-center flex h-full w-full text-xl";
   return (
-    <div className={`col-span-2 h-full flex flex-col gap-4`}>
+    <div className={`col-span-2 max-xl:col-span-1 h-full flex flex-col gap-4`}>
       <div className={`${blocksStyles} min-h-[70%]`}>
         <MonthSummary rawTransactions={rawTransactions}></MonthSummary>
       </div>

@@ -18,3 +18,9 @@ body {
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
+
+aside {
+  background: rgba(17, 21, 28, 0.75);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}

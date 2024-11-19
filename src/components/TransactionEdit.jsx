@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TableData } from "./Transactions";
 
 export default function TransactionEdit({
   categories,
@@ -35,44 +36,41 @@ export default function TransactionEdit({
   }
 
   return (
-    <div className="flex">
-      <div className="w-[30%]">
+    <>
+      <TableData>
         <select
-          className="bg-[#1D222A] p-4 w-[90%] rounded-2xl rounded-ss-none appearance-none"
+          className="bg-[#1D222A]  appearance-none w-full"
           value={newCategory}
           onChange={handleSetNewCategory}
         >
           {categories.map((category) => {
             return (
-              <option
-                key={category}
-                className="bg-[#1D222A] text-xl rounded p-2"
-              >
+              <option key={category} className="bg-[#1D222A] text-xl rounded">
                 {category}
               </option>
             );
           })}
         </select>
-      </div>
-      <div className="w-[30%]">
+      </TableData>
+      <TableData>
         <input
-          className="bg-[#1D222A] text-white p-2 rounded-md w-[90%] h-full"
+          className="bg-[#1D222A] text-white w-full"
           type="date"
           onChange={handleSetNewDate}
           value={newDate}
         />
-      </div>
-      <div className={`w-[30%] break-all`}>
+      </TableData>
+      <TableData>
         <input
-          className="bg-[#1D222A] p-4 rounded-2xl rounded-ss-none w-[90%]"
+          className="bg-[#1D222A] w-full"
           type="number"
           onChange={handleSetNewAmount}
           placeholder={newAmount}
         />
-      </div>
-      <div className="w-[10%] flex items-center justify-center gap-2 mr-4">
+      </TableData>
+      <TableData>
         <button
-          className="hover:text-green-500 h-fit"
+          className="hover:text-green-500  mr-2"
           onClick={() => {
             updateTransaction();
             onEditMenu();
@@ -80,10 +78,10 @@ export default function TransactionEdit({
         >
           <i className="fa-solid fa-check"></i>
         </button>
-        <button className="hover:text-red-500 h-fit" onClick={onEditMenu}>
+        <button className="hover:text-red-500" onClick={onEditMenu}>
           <i className="fa-solid fa-cancel"></i>
         </button>
-      </div>
-    </div>
+      </TableData>
+    </>
   );
 }

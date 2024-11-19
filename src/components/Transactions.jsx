@@ -24,8 +24,8 @@ export default function Transactions({
   );
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
-      <div className="p-3 rounded min-w-[500px] w-[60%] max-h-[60%] flex flex-col bg-[#11151C] gap-4">
+    <div className="w-screen h-screen flex justify-center items-center p-12">
+      <div className="p-3 rounded w-full h-full flex flex-col bg-[#11151C] gap-4">
         <div className="flex justify-between w-full">
           <span className="text-xl">Ostatnie transakcje</span>
           <button
@@ -38,16 +38,16 @@ export default function Transactions({
           </button>
         </div>
         <div className="overflow-y-auto relative rounded">
-          <table className="w-full text-left">
+          <table className="text-left w-full table-fixed">
             <thead className="sticky top-0">
               <tr className="bg-[#1D222A]">
-                <th className="p-4">Kategoria</th>
-                <th className="p-4">Data</th>
-                <th className="p-4">Kwota</th>
-                <th className="p-4">Akcja</th>
+                <th className="py-4 px-2">Kategoria</th>
+                <th className="py-4 px-2">Data</th>
+                <th className="py-4 px-2">Kwota</th>
+                <th className="py-4 px-2">Akcja</th>
               </tr>
             </thead>
-            <tbody className="[&>*:nth-child(odd)]:bg-[#11151C]">
+            <tbody>
               {sortedTransactions.length === 0 ? (
                 <tr>
                   <td colSpan="4" className="text-center p-4">
@@ -58,50 +58,45 @@ export default function Transactions({
                 sortedTransactions.map((transaction) => (
                   <tr
                     key={transaction.id}
-                    className="bg-[#1d222a62] rounded-2xl"
+                    className={`bg-[#1d222a62] rounded-2xl w-full odd:bg-[#11151C] hover:bg-[#1D222A]`}
                   >
-                    <td className="p-4">
-                      {editMode && indexToEdit === transaction.id ? (
-                        <TransactionEdit
-                          id={transaction.id}
-                          date={transaction.date}
-                          category={transaction.category}
-                          amount={transaction.amount}
-                          onEditMenu={handleEditMode}
-                          categories={categories}
-                          onTransactionEdit={onTransactionEdit}
-                        />
-                      ) : (
-                        <div>{transaction.category}</div>
-                      )}
-                    </td>
-                    <td className="p-4">{transaction.date}</td>
-                    <td
-                      className={`p-4 ${
-                        transaction.amount < 0
-                          ? "text-red-600"
-                          : "text-green-400"
-                      } ${transaction.amount === 0 ? "text-white" : ""}`}
-                    >
-                      {`${transaction.amount} zł`}
-                    </td>
-                    <td className="p-4 flex gap-2">
-                      <button
-                        className="hover:text-red-500"
-                        onClick={() => onDeleteTransaction(transaction.id)}
-                      >
-                        <i className="fa-solid fa-trash"></i>
-                      </button>
-                      <button
-                        className="hover:text-gray-500"
-                        onClick={() => {
-                          handleIndexSelect(transaction.id);
-                          handleEditMode();
-                        }}
-                      >
-                        <i className="fa-solid fa-pen"></i>
-                      </button>
-                    </td>
+                    {editMode && indexToEdit === transaction.id ? (
+                      <TransactionEdit
+                        id={transaction.id}
+                        date={transaction.date}
+                        category={transaction.category}
+                        amount={transaction.amount}
+                        onEditMenu={handleEditMode}
+                        categories={categories}
+                        onTransactionEdit={onTransactionEdit}
+                      />
+                    ) : (
+                      <>
+                        <TableData>{transaction.category}</TableData>
+                        <TableData>{transaction.date}</TableData>
+                        <TableData
+                          amountCheck={true}
+                          transaction={transaction}
+                        >{`${transaction.amount} zł`}</TableData>
+                        <TableData>
+                          <button
+                            className="hover:text-red-500 mr-2"
+                            onClick={() => onDeleteTransaction(transaction.id)}
+                          >
+                            <i className="fa-solid fa-trash"></i>
+                          </button>
+                          <button
+                            className="hover:text-gray-500"
+                            onClick={() => {
+                              handleIndexSelect(transaction.id);
+                              handleEditMode();
+                            }}
+                          >
+                            <i className="fa-solid fa-pen"></i>
+                          </button>
+                        </TableData>
+                      </>
+                    )}
                   </tr>
                 ))
               )}
@@ -111,4 +106,22 @@ export default function Transactions({
       </div>
     </div>
   );
+}
+
+export function TableData({ children, amountCheck, transaction }) {
+  return (
+    <td
+      className={`px-2 py-4 truncate ${
+        amountCheck ? getAmountClass(transaction.amount) : ""
+      }`}
+    >
+      {children}
+    </td>
+  );
+}
+
+function getAmountClass(amount) {
+  if (amount < 0) return "text-red-600";
+  if (amount > 0) return "text-green-400";
+  return "text-white";
 }
