@@ -1,7 +1,7 @@
-import PieChart from "./PieChart";
 import LineChart from "./LineChart";
 import Summary from "./Summary";
 import { useRef } from "react";
+import PieChart from "./PieChart";
 
 export default function Panel({
   transactions,
@@ -17,21 +17,14 @@ export default function Panel({
   }
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center p-12 max-xl:h-full">
-      <div className="w-full h-full grid grid-cols-4 grid-rows-2 gap-4 max-xl:grid-cols-1">
-        <div className={`${blocksStyles}`}>
-          <span>Wydatki według kategorii</span>
-          <div className="h-[calc(100%-24px)] flex justify-center items-center">
-            {transactions.length > 0 ? (
-              <PieChart categories={categories} transactions={transactions} />
-            ) : (
-              <div>Brak transakcji...</div>
-            )}
-          </div>
-        </div>
-        <div
-          className={`${blocksStyles} flex flex-col col-span-3 max-xl:col-span-1`}
-        >
+    <div className="w-screen h-screen max-sm:h-fit flex justify-center items-center max-sm:p-6 p-12">
+      <div className="w-full h-full grid grid-cols-4 grid-rows-2 gap-4">
+        <PieChart
+          transactions={transactions}
+          categories={categories}
+          blocksStyles={blocksStyles}
+        ></PieChart>
+        <div className={`${blocksStyles} flex flex-col col-span-3`}>
           <div className="w-full flex justify-between">
             <span>Dochody vs wydatki</span>
             <button
@@ -51,9 +44,7 @@ export default function Panel({
             )}
           </div>
         </div>
-        <div
-          className={`${blocksStyles} col-span-2 max-xl:col-span-1 flex flex-col gap-4`}
-        >
+        <div className={`${blocksStyles} col-span-2 flex flex-col gap-4`}>
           <span>Ostatnie transakcje</span>
           <div className="overflow-y-auto h-full rounded">
             <table className="text-left w-full table-fixed">

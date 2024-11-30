@@ -21,7 +21,7 @@ export default function Sidebar({
         <i className="fa-solid fa-bars text-xl"></i>
       </button>
       <aside
-        className={`absolute flex flex-col items-center gap-12 py-12 h-screen transform transition-transform duration-300 max-xl:fixed max-xl:top-0 min-w-[300px] z-40 ${
+        className={`absolute flex flex-col items-center gap-12 py-12 h-screen transform transition-transform duration-300 max-sm:w-full max-sm:fixed max-xl:top-0 min-w-[300px] z-40 ${
           displayMenu ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -29,16 +29,16 @@ export default function Sidebar({
           <img className="w-[100px]" src="src\assets\moneyLogo.png" alt="" />
           <span className="w-fit text-4xl text-orange-300">SpendMeter</span>
         </div>
-        <div className={`col-span-4 flex justify-end flex-col`}>
-          <input
-            id="month-select"
-            type="month"
-            value={selectedMonth.toISOString().slice(0, 7)}
-            onChange={onMonthChange}
-            className="bg-[#1D222A] text-white p-2 rounded-md"
-          />
-        </div>
-        <ul className="flex flex-col gap-2">
+        <ul className="flex flex-col w-fit gap-2">
+          <li className="w-full">
+            <input
+              id="month-select"
+              type="month"
+              value={selectedMonth.toISOString().slice(0, 7)}
+              onChange={onMonthChange}
+              className="bg-[#1D222A] text-white p-2 rounded-md w-full"
+            />
+          </li>
           <NavItem
             onTabChange={onTabChange}
             selectedTab={selectedTab}
@@ -68,13 +68,13 @@ export default function Sidebar({
 
 export function NavItem({ name, tab, onTabChange, selectedTab, icon }) {
   const styles =
-    "flex items-center gap-2 text-2xl px-6 py-2 w-full text-left rounded hover:bg-[#1D222A]";
+    "flex items-center gap-2 text-2xl px-6 py-2 w-full text-left rounded";
   return (
     <li>
       <button
         className={
           selectedTab === tab
-            ? `bg-[#1D222A] ${styles}`
+            ? `menuOnButton ${styles}`
             : `text-gray-400 ${styles}`
         }
         onClick={() => {

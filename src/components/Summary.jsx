@@ -8,13 +8,13 @@ export default function Summary({
 }) {
   const summaryData = onCountSummaryData();
   const styles =
-    "rounded bg-[#11151C] text-center justify-center items-center flex h-full w-full text-xl";
+    "rounded bg-[#11151C] text-center justify-center items-center flex w-full text-xl py-4";
   return (
-    <div className={`col-span-2 max-xl:col-span-1 h-full flex flex-col gap-4`}>
-      <div className={`${blocksStyles} min-h-[70%]`}>
+    <div className={`col-span-2 max-sm:col-span-1 flex flex-col gap-4`}>
+      <div className={`${blocksStyles} h-full`}>
         <MonthSummary rawTransactions={rawTransactions}></MonthSummary>
       </div>
-      <div className="flex justify-between h-full w-full gap-4">
+      <div className="flex justify-between max-sm:h-full h-[20%] w-full gap-4 max-sm:flex-col">
         <div className={styles}>
           {transactions.length > 0 ? (
             <DataSpan

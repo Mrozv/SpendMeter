@@ -52,50 +52,42 @@ export default function MonthSummary({ rawTransactions }) {
   return (
     <div className="flex flex-col gap-4 h-full">
       <span>Podsumowanie</span>
-      <div className="flex p-4 rounded-2xl justify-between bg-[#1D222A]">
-        <SummaryLabel icon={"fa-regular fa-calendar-days"} />
-        <SummaryLabel icon={"fa-solid fa-wallet"} />
-        <SummaryLabel icon={"fa-solid fa-arrow-trend-up"} />
-        <SummaryLabel icon={"fa-solid fa-arrow-trend-down"} />
+      <div className="overflow-y-auto h-full rounded">
+        {rawTransactions.length > 0 ? (
+          <table className="text-left w-full table-fixed">
+            <thead className="sticky top-0">
+              <tr className="bg-[#1D222A]">
+                <th className="p-4">Miesiąc</th>
+                <th className="p-4">Całkowite</th>
+                <th className="p-4">Dochody</th>
+                <th className="p-4">Wydatki</th>
+              </tr>
+            </thead>
+            <tbody className="[&>*:nth-child(odd)]:bg-[#11151C]">
+              {countMonthSummary().map((month) => (
+                <tr key={Math.random()} className="bg-[#1d222a62]">
+                  <td className="p-4">{month.month}</td>
+                  <td className="p-4">{`${month.total} zł`}</td>
+                  <td
+                    className={`p-4 ${
+                      month.positive === 0 ? "text-white" : "text-green-400"
+                    }`}
+                  >{`${month.positive} zł`}</td>
+                  <td
+                    className={`p-4 ${
+                      month.negative === 0 ? "text-white" : "text-red-600"
+                    }`}
+                  >{`${month.negative} zł`}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className="w-full h-full flex justify-center items-center">
+            <span>Brak transakcji...</span>
+          </div>
+        )}
       </div>
-      {rawTransactions.length > 0 ? (
-        <div className="overflow-y-auto h-full">
-          {countMonthSummary().map((month) => {
-            return (
-              <div key={Math.random()} className="flex p-2 justify-between">
-                <span className={`w-1/4`}>{month.month}</span>
-                <MonthData data={month.total} />
-                <MonthData data={month.positive} />
-                <MonthData data={month.negative} />
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        <div className="w-full h-full flex justify-center items-center">
-          <span>Brak transakcji...</span>
-        </div>
-      )}
     </div>
-  );
-}
-
-function MonthData({ data }) {
-  return (
-    <span
-      className={`w-1/4 ${data < 0 && "text-red-600"} ${
-        data === 0 && "text-white"
-      } ${data > 0 && "text-green-400"}`}
-    >
-      {data.toFixed(2)}
-    </span>
-  );
-}
-
-function SummaryLabel({ icon }) {
-  return (
-    <span className="flex w-full justify-between">
-      <i className={`${icon} text-2xl`}></i>
-    </span>
   );
 }
